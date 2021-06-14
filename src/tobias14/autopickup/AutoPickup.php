@@ -17,6 +17,7 @@ class AutoPickup extends PluginBase implements Listener
 
     public function onBreak(BlockBreakEvent $event)
     {
+        if($event->isCancelled()) return;
         $player = $event->getPlayer();
 
         // Send items to player
