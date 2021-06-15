@@ -12,6 +12,7 @@ class AutoPickup extends PluginBase implements Listener
 
     public function onEnable()
     {
+        $this->reloadConfig();
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
@@ -19,6 +20,9 @@ class AutoPickup extends PluginBase implements Listener
     {
         if($event->isCancelled()) return;
         $player = $event->getPlayer();
+
+        $affectedWorlds = $this->getConfig()->get("worlds", []);
+        if(!in_array($player->getLevel()->getName(), $affectedWorlds)) return;
 
         // Send items to player
         $drops = $event->getDrops();
