@@ -10,13 +10,13 @@ use pocketmine\plugin\PluginBase;
 class AutoPickup extends PluginBase implements Listener
 {
 
-    public function onEnable()
+    public function onEnable() : void 
     {
         $this->reloadConfig();
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
-    public function onBreak(BlockBreakEvent $event)
+    public function onBreak(BlockBreakEvent $event) : void 
     {
         if($event->isCancelled()) return;
         $player = $event->getPlayer();
