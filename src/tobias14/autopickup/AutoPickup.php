@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace tobias14\autopickup;
 
 use pocketmine\event\block\BlockBreakEvent;
+use pocketmine\event\EventPriority;
 use pocketmine\event\Listener;
+use pocketmine\plugin\MethodEventExecutor;
 use pocketmine\plugin\PluginBase;
 
 class AutoPickup extends PluginBase implements Listener
@@ -13,7 +15,7 @@ class AutoPickup extends PluginBase implements Listener
     public function onEnable()
     {
         $this->reloadConfig();
-        $this->getServer()->getPluginManager()->registerEvents($this, $this);
+        $this->getServer()->getPluginManager()->registerEvent("pocketmine\\event\\block\\BlockBreakEvent", $this, EventPriority::HIGHEST, new MethodEventExecutor("onBreak"), $this);
     }
 
     public function onBreak(BlockBreakEvent $event)
