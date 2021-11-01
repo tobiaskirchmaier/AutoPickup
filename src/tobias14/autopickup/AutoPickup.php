@@ -13,9 +13,23 @@ use pocketmine\utils\TextFormat;
 class AutoPickup extends PluginBase implements Listener
 {
 
+    /** @var string $fullInvPopup */
+    protected $fullInvPopup;
+
+    /** @var string $mode */
+    protected $mode;
+
+    /** @var array $affectedWorlds */
+    protected $affectedWorlds;
+
     public function onEnable() : void 
     {
         $this->reloadConfig();
+
+        $this->fullInvPopup = $this->getConfig()->get('full-inventory', '');
+        $this->mode = $this->getConfig()->get('mode', 'blacklist');
+        $this->affectedWorlds = $this->getConfig()->get('worlds', []);
+
         $this->getServer()->getPluginManager()->registerEvent(BlockBreakEvent::class, $this, EventPriority::HIGHEST, new MethodEventExecutor("onBreak"), $this);
     }
 
@@ -24,7 +38,7 @@ class AutoPickup extends PluginBase implements Listener
         if($event->isCancelled()) return;
         $player = $event->getPlayer();
 
-        if(!$this->checkWorld($player->getLevel()->getName()))
+        if(!$this->shouldPickup($player->getLevel()->getName()))
             return;
 
         // Send items to player
@@ -34,9 +48,9 @@ class AutoPickup extends PluginBase implements Listener
                 $player->getInventory()->addItem($drop);
                 unset($drops[$key]);
             } else {
-                $popup = $this->getConfig()->get('full-inventory', '');
-                if($popup != '')
-                    $player->sendPopup(TextFormat::colorize($popup));
+                if($this->fullInvPopup != '') {
+                    $player->sendPopup(TextFormat::colorize($this->fullInvPopup));
+                }
             }
         }
         $event->setDrops($drops);
@@ -51,15 +65,13 @@ class AutoPickup extends PluginBase implements Listener
      * @param string $level
      * @return bool
      */
-    private function checkWorld(string $level): bool
+    private function shouldPickup(string $level): bool
     {
-        $mode = $this->getConfig()->get('mode', 'blacklist');
-        $affectedWorlds = $this->getConfig()->get('worlds', []);
-        if(strtolower($mode) == 'blacklist') {
-            if(in_array($level, $affectedWorlds))
+        if(strtolower($this->mode) == 'blacklist') {
+            if(in_array($level, $this->affectedWorlds))
                 return false;
-        } elseif (strtolower($mode) == 'whitelist') {
-            if(!in_array($level, $affectedWorlds))
+        } elseif (strtolower($this->mode) == 'whitelist') {
+            if(!in_array($level, $this->affectedWorlds))
                 return false;
         }
         return true;
