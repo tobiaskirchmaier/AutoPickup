@@ -30,12 +30,11 @@ class AutoPickup extends PluginBase implements Listener
         $this->mode = $this->getConfig()->get('mode', 'blacklist');
         $this->affectedWorlds = $this->getConfig()->get('worlds', []);
 
-        $this->getServer()->getPluginManager()->registerEvent(BlockBreakEvent::class, $this, EventPriority::HIGHEST, new MethodEventExecutor("onBreak"), $this);
+        $this->getServer()->getPluginManager()->registerEvent(BlockBreakEvent::class, $this, EventPriority::HIGHEST, new MethodEventExecutor("onBreak"), $this, true);
     }
 
     public function onBreak(BlockBreakEvent $event) : void 
     {
-        if($event->isCancelled()) return;
         $player = $event->getPlayer();
 
         if(!$this->shouldPickup($player->getLevel()->getName()))
