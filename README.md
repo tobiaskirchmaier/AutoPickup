@@ -20,5 +20,5 @@ This also includes the experience points. This helps to avoid lags.
 - Move the plugin (`AutoPickup.phar`) to the `plugins/` folder of your server
 - Start the server, that's it!
 
-## Licence
+## License
 - GPL-3.0
