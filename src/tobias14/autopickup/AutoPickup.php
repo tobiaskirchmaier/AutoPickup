@@ -3,12 +3,13 @@ declare(strict_types=1);
 
 namespace tobias14\autopickup;
 
+use Closure;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\EventPriority;
 use pocketmine\event\Listener;
-use pocketmine\plugin\MethodEventExecutor;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
+use ReflectionException;
 
 class AutoPickup extends PluginBase implements Listener
 {
@@ -22,7 +23,7 @@ class AutoPickup extends PluginBase implements Listener
     /** @var array $affectedWorlds */
     protected $affectedWorlds;
 
-    public function onEnable() : void 
+    public function onEnable() : void
     {
         $this->reloadConfig();
 
@@ -30,14 +31,20 @@ class AutoPickup extends PluginBase implements Listener
         $this->mode = $this->getConfig()->get('mode', 'blacklist');
         $this->affectedWorlds = $this->getConfig()->get('worlds', []);
 
-        $this->getServer()->getPluginManager()->registerEvent(BlockBreakEvent::class, $this, EventPriority::HIGHEST, new MethodEventExecutor("onBreak"), $this, true);
+        $handlerClosure = Closure::fromCallable([$this, 'onBreak']);
+        try {
+            $this->getServer()->getPluginManager()->registerEvent(BlockBreakEvent::class, $handlerClosure, EventPriority::HIGHEST, $this);
+        } catch (ReflectionException $e) {
+            $this->getLogger()->critical($e->getMessage());
+            $this->getServer()->getPluginManager()->disablePlugin($this);
+        }
     }
 
     public function onBreak(BlockBreakEvent $event) : void 
     {
         $player = $event->getPlayer();
 
-        if(!$this->shouldPickup($player->getLevel()->getName()))
+        if(!$this->shouldPickup($player->getWorld()->getFolderName()))
             return;
 
         // Send items to player
@@ -56,7 +63,7 @@ class AutoPickup extends PluginBase implements Listener
 
         // Send xp to player
         $xpDrops = $event->getXpDropAmount();
-        $player->addXp($xpDrops);
+        $player->getXpManager()->addXp($xpDrops);
         $event->setXpDropAmount(0);
     }
 
