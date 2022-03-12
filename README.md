@@ -12,7 +12,7 @@
 ---
 
 ## About
-AutoPickup transports the drops from mined blocks directly into the inventory.
+AutoPickup transports the drops from mined blocks and killed entities directly into the inventory.
 This also includes the experience points. This helps to avoid lags.
 
 ## Installation
