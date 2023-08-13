@@ -4,5 +4,5 @@ version: 1.0.8
 main: tobiaskirchmaier\autopickup\AutoPickup
 api: [5.0.0]
 author: tobiaskirchmaier
-website: https://github.com/Tobias-2006/AutoPickup
+website: https://github.com/tobiaskirchmaier/AutoPickup
 ...
