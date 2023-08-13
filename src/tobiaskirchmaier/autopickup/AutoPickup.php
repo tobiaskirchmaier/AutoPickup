@@ -10,6 +10,7 @@ use pocketmine\event\entity\EntityDeathEvent;
 use pocketmine\event\EventPriority;
 use pocketmine\event\Listener;
 use pocketmine\player\Player;
+use pocketmine\plugin\DisablePluginException;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
 use ReflectionException;
@@ -33,8 +34,7 @@ class AutoPickup extends PluginBase implements Listener
             $onEntityDeath = Closure::fromCallable([$this, 'onEntityDeath']);
             $pluginMgr->registerEvent(EntityDeathEvent::class, $onEntityDeath, EventPriority::HIGHEST, $this);
         } catch (ReflectionException $e) {
-            $this->getLogger()->critical($e->getMessage());
-            $this->getServer()->getPluginManager()->disablePlugin($this);
+            throw new DisablePluginException($e->getMessage());
         }
     }
 
