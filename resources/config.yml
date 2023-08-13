@@ -7,7 +7,7 @@
 #                                                | |
 #                                                |_|
 # Config File
-# Version: 1.0.6
+# Version: 1.1.0
 
 # Mode can be either "whitelist" or "blacklist".
 # Whitelist ensures that AutoPickup is only active in the worlds entered below.
