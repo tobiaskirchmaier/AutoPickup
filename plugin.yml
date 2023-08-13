@@ -1,6 +1,6 @@
 ---
 name: AutoPickup
-version: 1.0.6
+version: 1.0.7
 main: tobias14\autopickup\AutoPickup
 api: [5.0.0]
 author: tobias14
