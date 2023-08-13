@@ -1,4 +1,4 @@
---- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/Tobias-2006/AutoPickup
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/tobiaskirchmaier/AutoPickup
 build-by-default: true
 branches:
 - main
