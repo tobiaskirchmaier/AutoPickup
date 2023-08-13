@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace tobias14\autopickup;
+namespace tobiaskirchmaier\autopickup;
 
 use Closure;
 use pocketmine\event\block\BlockBreakEvent;
@@ -13,7 +13,7 @@ use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
 use ReflectionException;
-use tobias14\autopickup\utils\Configuration;
+use tobiaskirchmaier\autopickup\utils\Configuration;
 
 class AutoPickup extends PluginBase implements Listener
 {

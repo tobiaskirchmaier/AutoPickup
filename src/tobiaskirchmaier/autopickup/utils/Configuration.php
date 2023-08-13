@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace tobias14\autopickup\utils;
+namespace tobiaskirchmaier\autopickup\utils;
 
 final class Configuration
 {
