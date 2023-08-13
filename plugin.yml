@@ -2,8 +2,7 @@
 name: AutoPickup
 version: 1.0.6
 main: tobias14\autopickup\AutoPickup
-api: [4.0.0]
-php: [8.0]
+api: [5.0.0]
 author: tobias14
 website: https://github.com/Tobias-2006/AutoPickup
 ...
