@@ -16,7 +16,7 @@ AutoPickup transports the drops from mined blocks and killed entities directly i
 This also includes the experience points. This helps to avoid lags.
 
 ## Installation
-- [Download](https://poggit.pmmp.io/p/AutoPickup) AutoPickup
+- [Download](https://poggit.pmmp.io/r/219876/AutoPickup_dev-14.phar) AutoPickup for Pocketmine-MP-API 5
 - Move the plugin (`AutoPickup.phar`) to the `plugins/` folder of your server
 - Start the server, that's it!
 
